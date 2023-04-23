@@ -10,44 +10,71 @@ from tap_norwaycitybikeapi.client import NorwayCityBikeAPIStream
 
 # TODO: Delete this is if not using json files for schema definition
 SCHEMAS_DIR = Path(__file__).parent / Path("./schemas")
-# TODO: - Override `UsersStream` and `GroupsStream` with your own stream definition.
-#       - Copy-paste as many times as needed to create multiple stream types.
 
 
-class UsersStream(NorwayCityBikeAPIStream):
+class StationsStream(NorwayCityBikeAPIStream):
     """Define custom stream."""
 
-    name = "users"
-    path = "/users"
-    primary_keys = ["id"]
-    replication_key = None
-    # Optionally, you may also use `schema_filepath` in place of `schema`:
-    # schema_filepath = SCHEMAS_DIR / "users.json"
+    name = "stations"
+    path = "/station_information.json"
+    primary_keys = ["station_id"]
+    # replication_key = "last_updated"
     schema = th.PropertiesList(
-        th.Property("name", th.StringType),
         th.Property(
-            "id",
+            "station_id",
             th.StringType,
-            description="The user's system ID",
+            description="The station's id",
         ),
         th.Property(
-            "age",
+            "name",
+            th.StringType,
+            description="The name of the station",
+        ),
+        th.Property(
+            "address",
+            th.StringType,
+            description="The address where the station is located",
+        ),
+        th.Property("lat", th.NumberType),
+        th.Property("lon", th.NumberType),
+        th.Property(
+            "capacity",
             th.IntegerType,
-            description="The user's age in years",
+            description="Number of bicycles that the stations can hold",
+        ),
+    ).to_dict()
+
+
+class AvailabilityStream(NorwayCityBikeAPIStream):
+    """Define custom stream."""
+
+    name = "availability"
+    path = "/station_status.json"
+    primary_keys = ["station_id"]
+    schema = th.PropertiesList(
+        th.Property(
+            "station_id",
+            th.StringType,
+            description="The station's id",
         ),
         th.Property(
-            "email",
-            th.StringType,
-            description="The user's email address",
+            "is_installed",
+            th.BooleanType,
+            description="The name of the station",
         ),
-        th.Property("street", th.StringType),
-        th.Property("city", th.StringType),
         th.Property(
-            "state",
-            th.StringType,
-            description="State name in ISO 3166-2 format",
+            "is_renting",
+            th.BooleanType,
+            description="The address where the station is located",
         ),
-        th.Property("zip", th.StringType),
+        th.Property("num_bikes_available", th.NumberType),
+        th.Property("num_docks_available", th.NumberType),
+        th.Property("last_reported", th.IntegerType),
+        th.Property(
+            "is_returning",
+            th.BooleanType,
+            description="The address where the station is located",
+        ),
     ).to_dict()
 
 
