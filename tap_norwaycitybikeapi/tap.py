@@ -25,7 +25,7 @@ class TapNorwayCityBikeAPI(Tap):
         ),
         th.Property(
             "city_name",
-            th.ArrayType(th.StringType),
+            th.StringType,
             required=True,
             description="Name of Norwegian city having City Bikes",
         ),
@@ -33,12 +33,6 @@ class TapNorwayCityBikeAPI(Tap):
             "start_date",
             th.DateTimeType,
             description="The earliest record date to sync",
-        ),
-        th.Property(
-            "api_url",
-            th.StringType,
-            default=" https://gbfs.urbansharing.com",
-            description="The url for the API service",
         ),
     ).to_dict()
 
@@ -49,8 +43,8 @@ class TapNorwayCityBikeAPI(Tap):
             A list of discovered streams.
         """
         return [
-            streams.GroupsStream(self),
-            streams.UsersStream(self),
+            streams.StationsStream(self),
+            streams.AvailabilityStream(self),
         ]
 
 
