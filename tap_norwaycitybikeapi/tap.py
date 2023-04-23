@@ -14,20 +14,20 @@ class TapNorwayCityBikeAPI(Tap):
 
     name = "tap-norwaycitybikeapi"
 
-    # TODO: Update this section with the actual config values you expect:
     config_jsonschema = th.PropertiesList(
         th.Property(
-            "auth_token",
+            "client_identifier",
             th.StringType,
             required=True,
             secret=True,  # Flag config as protected.
-            description="The token to authenticate against the API service",
+            description="The value should contain your company/organization name,"
+            "follwed by a dash and the application's name",
         ),
         th.Property(
-            "project_ids",
+            "city_name",
             th.ArrayType(th.StringType),
             required=True,
-            description="Project IDs to replicate",
+            description="Name of Norwegian city having City Bikes",
         ),
         th.Property(
             "start_date",
@@ -37,7 +37,7 @@ class TapNorwayCityBikeAPI(Tap):
         th.Property(
             "api_url",
             th.StringType,
-            default="https://api.mysample.com",
+            default=" https://gbfs.urbansharing.com",
             description="The url for the API service",
         ),
     ).to_dict()
