@@ -16,14 +16,12 @@ SCHEMAS_DIR = Path(__file__).parent / Path("./schemas")
 class NorwayCityBikeAPIStream(RESTStream):
     """NorwayCityBikeAPI stream class."""
 
-    # TODO: Set the API's base URL here:
-    url_base = "https://api.mysample.com"
-
-    # OR use a dynamic url_base:
-    # @property
-    # def url_base(self) -> str:
-    #     """Return the API URL root, configurable via tap settings."""
-    #     return self.config["api_url"]
+    @property
+    def url_base(self) -> str:
+        """Return the API URL root, configurable via tap settings."""
+        url = self.config["api_url"]
+        city_name = self.config["city_name"]
+        return f"{url}/{city_name}bysykkel.no"
 
     records_jsonpath = "$[*]"  # Or override `parse_response`.
     next_page_token_jsonpath = "$.next_page"  # Or override `get_next_page_token`.
@@ -36,10 +34,8 @@ class NorwayCityBikeAPIStream(RESTStream):
             A dictionary of HTTP headers.
         """
         headers = {}
-        if "user_agent" in self.config:
-            headers["User-Agent"] = self.config.get("user_agent")
-        # If not using an authenticator, you may also provide inline auth headers:
-        # headers["Private-Token"] = self.config.get("auth_token")
+        if "client_identifier" in self.config:
+            headers["Client-Identifier"] = self.config.get("client_identifier")
         return headers
 
     def get_next_page_token(
@@ -91,25 +87,6 @@ class NorwayCityBikeAPIStream(RESTStream):
             params["sort"] = "asc"
             params["order_by"] = self.replication_key
         return params
-
-    def prepare_request_payload(
-        self,
-        context: dict | None,
-        next_page_token: Any | None,
-    ) -> dict | None:
-        """Prepare the data payload for the REST API request.
-
-        By default, no payload will be sent (return None).
-
-        Args:
-            context: The stream context.
-            next_page_token: The next page index or value.
-
-        Returns:
-            A dictionary with the JSON body for a POST requests.
-        """
-        # TODO: Delete this method if no payload is required. (Most REST APIs.)
-        return None
 
     def parse_response(self, response: requests.Response) -> Iterable[dict]:
         """Parse the response and return an iterator of result records.
