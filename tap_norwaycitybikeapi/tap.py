@@ -21,8 +21,8 @@ class TapNorwayCityBikeAPI(Tap):
             required=True,
             secret=True,  # Flag config as protected.
             description=(
-                "The value should contain your company/organization name,"
-                "follwed by a dash and the application's name"
+                "The value should contain your company/organization name, "
+                "follwed by a dash and the application's name."
             ),
         ),
         th.Property(
@@ -30,12 +30,10 @@ class TapNorwayCityBikeAPI(Tap):
             th.StringType,
             default="oslo",
             required=True,
-            description="Name of Norwegian city having City Bikes",
-        ),
-        th.Property(
-            "start_date",
-            th.DateTimeType,
-            description="The earliest record date to sync",
+            description=(
+                "Name of Norwegian city having City Bikes. "
+                "Currently only available for Trondheim, Oslo and Bergen."
+            ),
         ),
     ).to_dict()
 
