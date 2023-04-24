@@ -72,7 +72,7 @@ class AvailabilityStream(NorwayCityBikeAPIStream):
         ),
         th.Property("num_bikes_available", th.NumberType),
         th.Property(
-            "num_docks_disabled",
+            "num_docks_available",
             th.NumberType,
             description=(
                 "Number of empty but disabled dock points at the station. This value "
