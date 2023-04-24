@@ -1,12 +1,26 @@
+<p align="center">
+  <img src="assets/bysykkel_logo.png" width="150" title="logo">
+</p>
+
 # tap-norwaycitybikeapi
 
-`tap-norwaycitybikeapi` is a Singer tap for NorwayCityBikeAPI.
+`tap-norwaycitybikeapi` is a Singer tap for the [Trondheim](https://trondheimbysykkel.no/en/open-data/realtime), [Oslo](https://oslobysykkel.no/en/open-data/realtime) and [Bergen](https://bergenbysykkel.no/en/open-data/realtime) City Bike APIs.
+> **Note*
+> Please note that the City Bike API data is published under the [Norwegian Licence for Open Government Data (NLOD) 2.0](https://data.norge.no/nlod/en/2.0).
 
 Built with the [Meltano Tap SDK](https://sdk.meltano.com) for Singer Taps.
 
-<!--
+## Capabilities
 
-Developer TODO: Update the below as needed to correctly describe the install procedure. For instance, if you do not have a PyPi repo, or if you want users to directly install from your git repo, you can modify this step as appropriate.
+* `catalog`
+* `state`
+* `discover`
+* `about`
+* `stream-maps`
+* `schema-flattening`
+
+## Settings
+
 
 ## Installation
 
@@ -22,21 +36,26 @@ Install from GitHub:
 pipx install git+https://github.com/andrejakobsen/tap-norwaycitybikeapi.git@main
 ```
 
--->
-
 ## Configuration
-
+There are two important configurations that need to be set to use this extractor: `client_identifier` and `city_name`
+This can be done with the commands
+```bash
+meltano config tap-norwaycitybikeapi set client_identifier [value]
+```
+and
+```bash
+meltano config tap-norwaycitybikeapi set city_name [value]
+```
 ### Accepted Config Options
 
-<!--
-Developer TODO: Provide a list of config options accepted by the tap.
-
-This section can be created by copy-pasting the CLI output from:
-
-```
-tap-norwaycitybikeapi --about --format=markdown
-```
--->
+| Setting             | Required | Default | Description |
+|:--------------------|:--------:|:-------:|:------------|
+| client_identifier   | True     | None    | The value should contain your company/organization name, follwed by a dash and the application's name. |
+| city_name           | True     | oslo    | Name of Norwegian city having City Bikes. Currently only available for Trondheim, Oslo and Bergen. |
+| stream_maps         | False    | None    | Config object for stream maps capability. For more information check out [Stream Maps](https://sdk.meltano.com/en/latest/stream_maps.html). |
+| stream_map_config   | False    | None    | User-defined config values to be used within map expressions. |
+| flattening_enabled  | False    | None    | 'True' to enable schema flattening and automatically expand nested properties. |
+| flattening_max_depth| False    | None    | The max depth to flatten schemas. |
 
 A full list of supported settings and capabilities for this
 tap is available by running:
@@ -50,12 +69,6 @@ tap-norwaycitybikeapi --about
 This Singer tap will automatically import any environment variables within the working directory's
 `.env` if the `--config=ENV` is provided, such that config values will be considered if a matching
 environment variable is set either in the terminal context or in the `.env` file.
-
-### Source Authentication and Authorization
-
-<!--
-Developer TODO: If your tap requires special access on the source system, or any special authentication requirements, provide those here.
--->
 
 ## Usage
 
@@ -99,12 +112,6 @@ poetry run tap-norwaycitybikeapi --help
 
 _**Note:** This tap will work in any Singer environment and does not require Meltano.
 Examples here are for convenience and to streamline end-to-end orchestration scenarios._
-
-<!--
-Developer TODO:
-Your project comes with a custom `meltano.yml` project file already created. Open the `meltano.yml` and follow any "TODO" items listed in
-the file.
--->
 
 Next, install Meltano (if you haven't already) and any needed plugins:
 
