@@ -5,8 +5,11 @@ from __future__ import annotations
 from singer_sdk import Tap
 from singer_sdk import typing as th  # JSON schema typing helpers
 
-# TODO: Import your custom stream types here:
-from tap_norwaycitybikeapi import streams
+from tap_norwaycitybikeapi.streams import (
+    AvailabilityStream,
+    NorwayCityBikeAPIStream,
+    StationsStream,
+)
 
 
 class TapNorwayCityBikeAPI(Tap):
@@ -37,15 +40,15 @@ class TapNorwayCityBikeAPI(Tap):
         ),
     ).to_dict()
 
-    def discover_streams(self) -> list[streams.NorwayCityBikeAPIStream]:
+    def discover_streams(self) -> list[NorwayCityBikeAPIStream]:
         """Return a list of discovered streams.
 
         Returns:
             A list of discovered streams.
         """
         return [
-            streams.StationsStream(self),
-            streams.AvailabilityStream(self),
+            StationsStream(self),
+            AvailabilityStream(self),
         ]
 
 

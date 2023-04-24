@@ -30,7 +30,6 @@ class NorwayCityBikeAPIStream(RESTStream):
         return f"https://gbfs.urbansharing.com/{city_name}bysykkel.no"
 
     records_jsonpath = "$.data.*[*]"  # Or override `parse_response`.
-    next_page_token_jsonpath = "$.next_page"  # Or override `get_next_page_token`.
 
     @property
     def http_headers(self) -> dict:
@@ -75,18 +74,4 @@ class NorwayCityBikeAPIStream(RESTStream):
         Yields:
             Each record from the source.
         """
-        # TODO: Parse response body and return a set of records.
         yield from extract_jsonpath(self.records_jsonpath, input=response.json())
-
-    def post_process(self, row: dict, context: dict | None = None) -> dict | None:
-        """As needed, append or transform raw data to match expected structure.
-
-        Args:
-            row: An individual record from the stream.
-            context: The stream context.
-
-        Returns:
-            The updated record dictionary, or ``None`` to skip the record.
-        """
-        # TODO: Delete this method if not needed.
-        return row
