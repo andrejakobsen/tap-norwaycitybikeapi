@@ -1,9 +1,9 @@
 [tool.poetry]
-name = "Norway City Bike API-tap-norwaycitybikeapi"
+name = "tap-norwaycitybikeapi"
 version = "0.0.2"
 description = "`tap-norwaycitybikeapi` is a Singer tap for NorwayCityBikeAPI, built with the Meltano Singer SDK."
 readme = "README.md"
-authors = ["Kristian André Jakobsen <kristian.a.jakobsen@gmail.com>"]
+authors = ["Kristian André Jakobsen <k.andrejakobsen@gmail.com>"]
 keywords = ["ELT", "NorwayCityBikeAPI"]
 license = "Apache 2.0"
 packages = [{ include = "tap_norwaycitybikeapi" }]
