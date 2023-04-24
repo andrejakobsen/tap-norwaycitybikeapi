@@ -20,8 +20,10 @@ class TapNorwayCityBikeAPI(Tap):
             th.StringType,
             required=True,
             secret=True,  # Flag config as protected.
-            description="The value should contain your company/organization name,"
-            "follwed by a dash and the application's name",
+            description=(
+                "The value should contain your company/organization name,"
+                "follwed by a dash and the application's name"
+            ),
         ),
         th.Property(
             "city_name",
