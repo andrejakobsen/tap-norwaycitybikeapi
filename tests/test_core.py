@@ -6,7 +6,6 @@ from singer_sdk.testing import get_tap_test_class
 
 from tap_norwaycitybikeapi.tap import TapNorwayCityBikeAPI
 
-
 OSLO_CONFIG = {
     "start_date": datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%d"),
     "client_identifier": "andrejakobsen-meltanotap",
