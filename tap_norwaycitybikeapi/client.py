@@ -36,34 +36,6 @@ class NorwayCityBikeAPIStream(RESTStream):
             headers["Client-Identifier"] = self.config.get("client_identifier")
         return headers
 
-    def get_next_page_token(
-        self,
-        response: requests.Response,
-        previous_token: Any | None,
-    ) -> Any | None:
-        """Return a token for identifying next page or None if no more pages.
-
-        Args:
-            response: The HTTP ``requests.Response`` object.
-            previous_token: The previous page token value.
-
-        Returns:
-            The next pagination token.
-        """
-        # TODO: If pagination is required, return a token which can be used to get the
-        #       next page. If this is the final page, return "None" to end the
-        #       pagination loop.
-        if self.next_page_token_jsonpath:
-            all_matches = extract_jsonpath(
-                self.next_page_token_jsonpath, response.json()
-            )
-            first_match = next(iter(all_matches), None)
-            next_page_token = first_match
-        else:
-            next_page_token = response.headers.get("X-Next-Page", None)
-
-        return next_page_token
-
     def get_url_params(
         self,
         context: dict | None,
