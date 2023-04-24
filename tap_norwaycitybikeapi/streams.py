@@ -8,12 +8,9 @@ from singer_sdk import typing as th  # JSON Schema typing helpers
 
 from tap_norwaycitybikeapi.client import NorwayCityBikeAPIStream
 
-# TODO: Delete this is if not using json files for schema definition
-SCHEMAS_DIR = Path(__file__).parent / Path("./schemas")
-
 
 class StationsStream(NorwayCityBikeAPIStream):
-    """Define custom stream."""
+    """Stream for information about stations and their locations."""
 
     name = "stations"
     path = "/station_information.json"
@@ -23,30 +20,35 @@ class StationsStream(NorwayCityBikeAPIStream):
         th.Property(
             "station_id",
             th.StringType,
-            description="The station's id",
+            description="Unique identifier of a station",
         ),
         th.Property(
             "name",
             th.StringType,
-            description="The name of the station",
+            description="Public name of the station",
         ),
         th.Property(
             "address",
             th.StringType,
-            description="The address where the station is located",
+            description="Valid street number and name where station is located",
         ),
-        th.Property("lat", th.NumberType),
-        th.Property("lon", th.NumberType),
+        th.Property("lat", th.NumberType, description="The WGS 84 latitude of station"),
+        th.Property(
+            "lon", th.NumberType, description="The WGS 84 longitude of station"
+        ),
         th.Property(
             "capacity",
             th.IntegerType,
-            description="Number of bicycles that the stations can hold",
+            description=(
+                "Number of total docking points installed at this station, both "
+                "available and unavailable"
+            ),
         ),
     ).to_dict()
 
 
 class AvailabilityStream(NorwayCityBikeAPIStream):
-    """Define custom stream."""
+    """Stream for the availability of stations."""
 
     name = "availability"
     path = "/station_status.json"
@@ -55,38 +57,37 @@ class AvailabilityStream(NorwayCityBikeAPIStream):
         th.Property(
             "station_id",
             th.StringType,
-            description="The station's id",
+            description="Unique identifier of a station",
         ),
         th.Property(
             "is_installed",
             th.BooleanType,
-            description="The name of the station",
+            description="1/0 boolean - is the station currently on the street",
         ),
         th.Property(
             "is_renting",
             th.BooleanType,
-            description="The address where the station is located",
+            description=(
+                "1/0 boolean - is the station currently renting bikes (even if the "
+                "station is empty, if it is set to allow rentals this value should be 1)"
+            ),
         ),
         th.Property("num_bikes_available", th.NumberType),
-        th.Property("num_docks_available", th.NumberType),
+        th.Property(
+            "num_docks_disabled",
+            th.NumberType,
+            description=(
+                "Number of empty but disabled dock points at the station. This value "
+                "remains as part of the spec as it is possibly useful during development"
+            ),
+        ),
         th.Property("last_reported", th.IntegerType),
         th.Property(
             "is_returning",
             th.BooleanType,
-            description="The address where the station is located",
+            description=(
+                "1/0 boolean - is the station accepting bike returns (if a station is "
+                "full but would allow a return if it was not full then this value should be 1)"
+            ),
         ),
-    ).to_dict()
-
-
-class GroupsStream(NorwayCityBikeAPIStream):
-    """Define custom stream."""
-
-    name = "groups"
-    path = "/groups"
-    primary_keys = ["id"]
-    replication_key = "modified"
-    schema = th.PropertiesList(
-        th.Property("name", th.StringType),
-        th.Property("id", th.StringType),
-        th.Property("modified", th.DateTimeType),
     ).to_dict()
