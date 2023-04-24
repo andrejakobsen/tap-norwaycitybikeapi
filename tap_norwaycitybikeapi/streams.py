@@ -59,12 +59,12 @@ class AvailabilityStream(NorwayCityBikeAPIStream):
         ),
         th.Property(
             "is_installed",
-            th.BooleanType,
+            th.IntegerType,
             description="1/0 boolean - is the station currently on the street",
         ),
         th.Property(
             "is_renting",
-            th.BooleanType,
+            th.IntegerType,
             description=(
                 "1/0 boolean - is the station currently renting bikes (even if the "
                 "station is empty, if it is set to allow rentals this value should be 1)"
@@ -82,7 +82,7 @@ class AvailabilityStream(NorwayCityBikeAPIStream):
         th.Property("last_reported", th.IntegerType),
         th.Property(
             "is_returning",
-            th.BooleanType,
+            th.IntegerType,
             description=(
                 "1/0 boolean - is the station accepting bike returns (if a station is "
                 "full but would allow a return if it was not full then this value should be 1)"

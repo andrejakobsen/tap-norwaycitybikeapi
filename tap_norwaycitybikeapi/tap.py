@@ -20,6 +20,7 @@ class TapNorwayCityBikeAPI(Tap):
             th.StringType,
             required=True,
             secret=True,  # Flag config as protected.
+            default="user-meltano",
             description=(
                 "The value should contain your company/organization name,"
                 "follwed by a dash and the application's name"
@@ -28,6 +29,7 @@ class TapNorwayCityBikeAPI(Tap):
         th.Property(
             "city_name",
             th.StringType,
+            default="oslo",
             required=True,
             description="Name of Norwegian city having City Bikes",
         ),
