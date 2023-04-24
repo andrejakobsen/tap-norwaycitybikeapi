@@ -67,7 +67,8 @@ class AvailabilityStream(NorwayCityBikeAPIStream):
             th.BooleanType,
             description=(
                 "1/0 boolean - is the station currently renting bikes (even if the "
-                "station is empty, if it is set to allow rentals this value should be 1)"
+                "station is empty, if it is set to allow rentals this value should "
+                "be 1)"
             ),
         ),
         th.Property("num_bikes_available", th.NumberType),
@@ -76,7 +77,8 @@ class AvailabilityStream(NorwayCityBikeAPIStream):
             th.NumberType,
             description=(
                 "Number of empty but disabled dock points at the station. This value "
-                "remains as part of the spec as it is possibly useful during development"
+                "remains as part of the spec as it is possibly useful during "
+                "development"
             ),
         ),
         th.Property("last_reported", th.IntegerType),
@@ -85,7 +87,8 @@ class AvailabilityStream(NorwayCityBikeAPIStream):
             th.BooleanType,
             description=(
                 "1/0 boolean - is the station accepting bike returns (if a station is "
-                "full but would allow a return if it was not full then this value should be 1)"
+                "full but would allow a return if it was not full then this value "
+                "should be 1)"
             ),
         ),
     ).to_dict()

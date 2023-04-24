@@ -18,8 +18,15 @@ class NorwayCityBikeAPIStream(RESTStream):
 
     @property
     def url_base(self) -> str:
-        """Return the API URL root, configurable via tap settings."""
-        city_name = self.config["city_name"]
+        """_summary_
+        Return the API URL root, configurable via tap settings.
+
+        Returns:
+            str: url_base
+                Set dynamically based on `city_name`, which can either
+                be `bergen`, `trondheim` or `oslo`.
+        """
+        city_name = self.config["city_name"].lower()
         return f"https://gbfs.urbansharing.com/{city_name}bysykkel.no"
 
     records_jsonpath = "$.data.*[*]"  # Or override `parse_response`.
