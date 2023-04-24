@@ -37,6 +37,17 @@ class TapNorwayCityBikeAPI(Tap):
                 "Name of Norwegian city having City Bikes. "
                 "Currently only available for Trondheim, Oslo and Bergen."
             ),
+            allowed_values=[
+                "oslo",
+                "bergen",
+                "trondheim",
+                "Oslo",
+                "Bergen",
+                "Trondheim",
+                "OSLO",
+                "BERGEN",
+                "TRONDHEIM",
+            ],
         ),
     ).to_dict()
 
