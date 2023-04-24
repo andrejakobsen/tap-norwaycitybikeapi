@@ -5,10 +5,12 @@
 # tap-norwaycitybikeapi
 
 `tap-norwaycitybikeapi` is a Singer tap for the [Trondheim](https://trondheimbysykkel.no/en/open-data/realtime), [Oslo](https://oslobysykkel.no/en/open-data/realtime) and [Bergen](https://bergenbysykkel.no/en/open-data/realtime) City Bike APIs.
-> **Note*
-> Please note that the City Bike API data is published under the [Norwegian Licence for Open Government Data (NLOD) 2.0](https://data.norge.no/nlod/en/2.0).
 
 Built with the [Meltano Tap SDK](https://sdk.meltano.com) for Singer Taps.
+
+> **Note**
+> The City Bike APIs are published under the [Norwegian Licence for Open Government Data (NLOD) 2.0](https://data.norge.no/nlod/en/2.0).
+
 
 ## Capabilities
 
@@ -18,9 +20,6 @@ Built with the [Meltano Tap SDK](https://sdk.meltano.com) for Singer Taps.
 * `about`
 * `stream-maps`
 * `schema-flattening`
-
-## Settings
-
 
 ## Installation
 
